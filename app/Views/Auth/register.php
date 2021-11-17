@@ -8,37 +8,50 @@
         <div class="card-body">
             <p class="login-box-msg">Register a new membership</p>
 
-            <form action="../../index.html" method="post">
+            <form action="<?= base_url('Auth/save'); ?>" method="post">
+                <?= csrf_field(); ?>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Full name">
+                    <input type="text" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" name="username" value="<?= old('username'); ?>" placeholder="Username">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
                         </div>
                     </div>
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        <?= $validation->getError('username'); ?>
+                    </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" name="email" value="<?= old('email'); ?>" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        <?= $validation->getError('email'); ?>
+                    </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" name="password" value="<?= old('password'); ?>" placeholder="Password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
                         </div>
                     </div>
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        <?= $validation->getError('password'); ?>
+                    </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Retype password">
+                    <input type="password" class="form-control <?= ($validation->hasError('retypepassword')) ? 'is-invalid' : ''; ?>" name="retypepassword" value="<?= old('retypepassword'); ?>" placeholder="Retype password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
                         </div>
+                    </div>
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        <?= $validation->getError('retypepassword'); ?>
                     </div>
                 </div>
                 <div class="row">
@@ -57,7 +70,7 @@
                     <!-- /.col -->
                 </div>
             </form>
-            <a href="<?= base_url('Auth'); ?>" class="text-center">I already have a membership</a>
+            <a href="<?= base_url('/'); ?>" class="text-center">I already have a membership</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->

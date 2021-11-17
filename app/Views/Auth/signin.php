@@ -10,9 +10,15 @@
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
-            <form action="<?= base_url('assets'); ?>/index3.html" method="post">
+            <form action="<?= base_url('/Auth/login'); ?>" method="post">
+                <?= csrf_field(); ?>
+                <?php if (session()->getFlashdata('pesan')) : ?>
+                    <div class="alert alert-warning">
+                        <?= session()->getFlashdata('pesan') ?>
+                    </div>
+                <?php endif; ?>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -20,7 +26,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -44,7 +50,7 @@
                 </div>
             </form>
             <p class="mb-0">
-                <a href="<?= base_url('Auth/register'); ?>" class="text-center">Register a new membership</a>
+                <a href="<?= base_url('/register'); ?>" class="text-center">Register a new membership</a>
             </p>
         </div>
         <!-- /.card-body -->
