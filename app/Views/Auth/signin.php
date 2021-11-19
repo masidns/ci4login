@@ -5,20 +5,20 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="<?= base_url('assets'); ?>/index2.html" class="h1"><b>Admin</b>LTE</a>
+            <a href="" class="h1"><b>Admin</b>LTE</a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
             <form action="<?= base_url('/Auth/login'); ?>" method="post">
-                <?= csrf_field(); ?>
-                <?php if (session()->getFlashdata('pesan')) : ?>
+                <!-- <?= csrf_field(); ?> -->
+                <?php if (session()->getFlashdata('msg')) : ?>
                     <div class="alert alert-warning">
-                        <?= session()->getFlashdata('pesan') ?>
+                        <?= session()->getFlashdata('msg') ?>
                     </div>
                 <?php endif; ?>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" value="<?= old('email') ?>" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -49,6 +49,7 @@
                     <!-- /.col -->
                 </div>
             </form>
+
             <p class="mb-0">
                 <a href="<?= base_url('/register'); ?>" class="text-center">Register a new membership</a>
             </p>
@@ -57,4 +58,5 @@
     </div>
     <!-- /.card -->
 </div>
-<?= $this->endSection(); ?>
+<!-- /.login-box -->
+<?= $this->endsection(); ?>

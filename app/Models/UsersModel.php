@@ -14,7 +14,12 @@ class UsersModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'email', 'level', 'password'];
+    protected $allowedFields    = [
+        'username',
+        'email',
+        'level',
+        'password',
+    ];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,19 +44,4 @@ class UsersModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function getUsers($id = false)
-    {
-        if ($id == false) {
-            return $this->findAll();
-        }
-        return $this->where(['id' => $id])->first();
-    }
-
-    public function login($email)
-    {
-        # code...
-        return $this->db->table('users')->where(array('email' => $email))->orWhere(array('username' => $email))
-            ->get()->getRowArray();
-    }
 }

@@ -17,8 +17,8 @@
 </head>
 
 <body class="hold-transition login-page">
-    <?= $this->renderSection('content');; ?>
-    <!-- /.login-box -->
+
+    <?= $this->rendersection('content'); ?>
 
     <!-- jQuery -->
     <script src="<?= base_url('assets'); ?>/plugins/jquery/jquery.min.js"></script>

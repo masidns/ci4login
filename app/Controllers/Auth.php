@@ -3,24 +3,68 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\AuthModel;
+use App\Models\UsersModel;
 
 class Auth extends BaseController
 {
 
-    protected $AuthModels;
+    protected $usersModel;
     public function __construct()
     {
         //Do your magic here
-        $this->AuthModels = new AuthModel();
+        $this->usersModel = new UsersModel();
     }
-
 
 
     public function index()
     {
         //
-        return view('Auth/signin');
+        // helper(['form']);
+        $data = [];
+        return view('Auth/signin', $data);
+        // return view('Auth/layout');
+    }
+
+    public function login()
+    {
+        // session() = session();
+
+        // $usersModel = new UsersModel();
+
+        $email = $this->request->getVar('email');
+        $password = $this->request->getVar('password');
+
+        $data = $this->usersModel->where('email', $email)->first();
+
+        if ($data) {
+            $pass = $data['password'];
+            $cekpassword = password_verify($password, $pass);
+            if ($cekpassword) {
+                $cekdata = [
+                    'id' => $data['id'],
+                    'username' => $data['username'],
+                    'email' => $data['email'],
+                    'level' => $data['level'],
+                    'isLoggedIn' => TRUE
+                ];
+
+                session()->set($cekdata);
+                return redirect()->to('/Testing');
+            } else {
+                session()->setFlashdata('msg', 'Password is incorrect.');
+                return redirect()->to('/signin');
+            }
+        } else {
+            session()->setFlashdata('msg', 'Email does not exist.');
+            return redirect()->to('/signin');
+        }
+    }
+
+    public function logout()
+    {
+        # code...
+        session()->destroy();
+        return redirect()->to('/signin');
     }
 
     public function register()
@@ -69,50 +113,12 @@ class Auth extends BaseController
             return redirect()->back()->withInput();
         };
 
-        $this->AuthModels->save([
+        $this->usersModel->save([
             'username' => $this->request->getVar('username'),
             'email' => $this->request->getVar('email'),
             'level' => 2,
             'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT)
         ]);
-        return redirect()->to('/Auth');
-    }
-
-    public function login()
-    {
-        # code...
-        $email = $this->request->getVar('email');
-        $password = $this->request->getVar('password');
-        $data = $this->AuthModels->where('email', $email)->first();
-
-        if ($data) {
-            $pass = $data['password'];
-            $cekpassword = password_verify($password, $pass);
-            if ($cekpassword) {
-                $cekdata = [
-                    'id' => $data['id'],
-                    'username' => $data['username'],
-                    'email' => $data['email'],
-                    'level' => $data['level'],
-                    'isLoggedIn' => TRUE
-                ];
-                session()->set($cekdata);
-                return redirect()->to('/Homepage');
-            } else {
-                session()->setFlashdata('pesan', 'Password is incorrect.');
-                return redirect()->to('/');
-            }
-        } else {
-            session()->setFlashdata('pesan', 'Email does not exist.');
-            return redirect()->to('/');
-        }
-        // dd($data);
-    }
-
-    public function logout()
-    {
-        # code...
-        session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to('/signin');
     }
 }
